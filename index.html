@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Movie Finder</title>
+	<link rel="stylesheet" type="text/css" href="movie.css">
+</head>
+<body>			
+		<section class="output">			
+			<section id="img"></section>
+		</section>
+		<section class="input" id="input">			
+			<label>Which movie are you looking for?</label><br>
+			<input id="finder" placeholder="Movie......">
+			<br>
+			<button onclick="showmovie()">SEARCH</button>
+		</section>
+			<script type="text/javascript">
+					function showmovie() 
+					{
+						finder = document.getElementById("finder").value;
+
+						httpRequest = new XMLHttpRequest();
+						url = "https://www.omdbapi.com/?i=tt3896198&apikey=a6797ca2&t="+finder;
+						httpRequest.open("GET",url);
+						httpRequest.send();
+						document.getElementById("input").innerHTML = " ";
+						httpRequest.onreadystatechange = function()
+						{
+							if(this.readyState == 4 && this.status == 200)
+							{
+								u_data = JSON.parse(this.responseText);
+								document.getElementById("img").innerHTML = "<img src=" +u_data.Poster + "/>";
+								document.getElementById("input").innerHTML = "Title :- "+u_data.Title +
+								"<br><br>Runtime :- "+u_data.Runtime + "<br><br>Cast :- "+u_data.Actors+"<br><br>Genre :- "+u_data.Genre + "<br><br>Summary :- "+u_data.Plot+"<br><br>IMBD Ratting :- "+u_data.imdbRating;
+								document.getElementById("img").style.cssFloat = "left";
+								document.getElementById("img").style.width = "50%";
+								document.getElementById("img").style.paddingTop = "50px";
+								document.getElementById("input").style.cssFloat = "left";
+								document.getElementById("input").style.width = "50%";
+								document.getElementById("input").style.textAlign = "left";
+								document.getElementById("input").style.fontSize = "130%";
+								document.getElementById("input").style.marginTop = "50px";
+								document.getElementById("input").style.fontFamily = "Cursive"
+								document.body.style.backgroundImage = "none";
+								document.body.style.backgroundColor = "#4d0019";
+							}						
+						}
+						
+					}
+			</script>				
+</body>
+</html>
